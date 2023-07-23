@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- axios -->
+    <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사장님 회원가입</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/ceo.css">
+    
+    <!-- axios -->
+    <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="wrap">
+        <form class="login">
+            <h2>사장님 회원가입</h2>
+            <div class="login login_id">
+                <h4>account_circle</h4>
+                <input type="email" name="email" id="email" placeholder="email">
+            </div>
+            <div class="login login_pw">
+                <h4>Password</h4>
+                <input type="password" name="pw" id="password" placeholder="Password">
+            </div>
+            <div class="login login_confirm">
+                <h4>Password Confirm</h4>
+                <input type="password" name="password" id="passwordConfirm" placeholder="Password">
+            </div>
+            <div class="login login_storeName">
+                <h4>storeName</h4>
+                <input type="text" name="storeName" id="storeName" placeholder="가게이름">
+            </div>
+            <div class="login login_storeImage">
+                <h4>storeImage</h4>
+                <input type="file" name="storeImage" id="storeImage" placeholder="가게사진">
+            </div>
+            <div class="submit">
+                <input type="button" class="btn" value="회원가입 완료" onclick="signUp();">
+            </div>
+        </form>
+    </div>
+
+  
+    <!-- script part -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="../js/ceoUsers.js"></script>
+</body>
+
+</html>

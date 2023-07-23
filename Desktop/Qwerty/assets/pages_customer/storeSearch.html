@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- axios -->
+  <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Qwerty's Delivery</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/customer.css">
+</head>
+
+<body>
+  <div id="wrap">
+    <!-- header --> 
+    <header id="header">
+      <div class="inner">
+        <h1><a href="../index.html">Qwerty's Delivery - 고객용</a></h1>
+
+        <nav class="nav">
+          <ul class="gnb">
+            <li><a href="./login.html">로그인</a></li> <!-- ./login.html -->
+            <li><a href="./register.html">회원가입</a></li> <!-- ./register.html -->
+          </ul>
+        </nav>
+
+        <!-- <div class="searchWrap">
+          <input type="text" placeholder="음식점을 입력해주세요" />
+          <button class="search" id="search-form">검색</button>
+        </div> -->
+      </div>
+    </header>
+
+    <section id="subVisual"></section>
+
+    <main id="container" class="main">
+      <section id="content">
+        <ul id="card-list"></ul>
+        <!-- 가게들이 카드 형태로 여기에 뿌려짐 -->
+      </section>
+    </main>
+
+    <footer id="footer">
+      <div class="inner">
+        <p>made by team.qwerty</p>
+      </div>
+    </footer>
+  </div>
+  <script>
+    const getStores = async () => {
+      axios.get('http://localhost:3000/api/user/stores')
+        .then(function (response) {
+          console.log(response.data);
+          const StoreCardList = document.querySelector("#card-list");
+
+          StoreCardList.innerHTML = response.data.map((store) => {
+            return `<li class="movie-card" id=${store.storeId}>
+                      <p>${store.storeImage}</p>
+                      <h3 class="movie-title">${store.storeName}</h3>
+                      <p>평점: ${store.totalRating}</p>
+                    </li>`
+          }).join('')
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      getStores()
+    })
+
+    function getStorePage() {
+      location.href = "/store.html"
+    }
+
+    const StoreCardList = document.querySelector('#card-list');
+    const storeIdSender = async ({ target }) => {
+      if (target === StoreCardList) return;
+
+      if (target.matches('.movie-card')) {
+        // alert("해당 가게로 이동합니다.");
+        await localStorage.setItem('storeId', target.id)
+        console.log('set storeId =>', localStorage.getItem('storeId'))
+        getStorePage()
+      } else {
+        // alert(target.parentNode.id);
+        await localStorage.setItem('storeId', target.parentNode.id)
+        console.log('set storeId =>', localStorage.getItem('storeId'))
+        getStorePage()
+      }
+    };
+    StoreCardList.addEventListener('click', storeIdSender);
+
+      // const SearchWords = async (searchWord) => {
+      //   const url = `http://localhost:3000/api/storeInfoList?${searchWord ? `searchWord=${searchWord}` : ''}`
+      //   // fetch 함수를 사용하여, 해당 주소(url)로 GET 요청을 보냅니다. 이를 통해 Server에서 영화 목록을 받아옵니다.
+      //   const response = await fetch(url);  
+
+      //   if (response.status !== 200) {
+      //     throw new Error('API call error!')
+      //   }
+      //   // 'response'의 본문을 JSON 형식으로 Parsing하여 반환합니다.
+      //   return await response.json()
+      // };
+
+      // // function renderMovieCard(movieList) {
+      // //   const cardList = document.querySelector("#card-list");
+
+      // //   cardList.innerHTML = movieList.map((movie) => {
+      // //     return `<li class="movie-card" id=${movie.id}>
+      // //         <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="${movie.title}">
+      // //         <h3 class="movie-title">${movie.title}</h3>
+      // //         <p>${movie.overview}</p>
+      // //         <p>Rating: ${movie.vote_average}</p>
+      // //       </li>`
+      // //   }).join('')
+      // // }
+
+      // document.addEventListener("DOMContentLoaded", async () => {
+      //   const topRatedMovies = await SearchWords()
+      //   renderMovieCard(topRatedMovies)
+
+      //   // 사용자가 검색어를 입력했을 경우, 실행되는 구문입니다.
+      //   const form = document.querySelector("#search-form");
+      //   form.addEventListener("click", async function () {
+      //     const searchWord = document.querySelector("#search-input").value;
+      //     const topRatedMovies = await SearchWords(searchWord)
+      //     renderMovieCard(topRatedMovies)
+      //   })
+      // })
+  </script>
+
+</body>
+
+</html>

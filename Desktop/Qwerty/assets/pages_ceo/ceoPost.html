@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>음식 추가, 수정, 삭제</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/ceo.css">
+
+    <!-- axios -->
+    <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div id="wrap">
+        <form>
+            <div>
+                <label for="menuName">메뉴이름:</label>
+                <input type="text" id="menuName" />
+            </div>
+            <div>
+                <label for="mail">메뉴사진:</label>
+                <input type="file" id="menuImage" />
+            </div>
+            <div>
+                <label for="price">가격:</label>
+                <input type="number" id="price" />
+            </div>
+
+            <div class="submitBtn">
+                <input type="button" class="btn" value="음식추가" onclick="menuPost();">
+            </div>
+        </form>
+    </div>
+    <!-- script part -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        // 메뉴 추가
+        function menuPost() {
+            const data = {
+                menuName: $('#menuName').val(),
+                menuImage: $('#menuImage').val(),
+                price: $('#price').val(),
+            }
+            console.log(data)
+            axios.post('http://localhost:3000/api/ceo/addMenu', data)
+            .then(request => {
+                console.log(data);
+                alert('음식등록완료!');
+                location.href = './ceo.html';
+            }).catch(function (error) {
+            console.log(error);
+            })
+        }
+    </script>
+</body>
+
+</html>

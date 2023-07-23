@@ -1,0 +1,64 @@
+/* mainVisual */
+#mainVisual {
+    width: 100%;
+    height: 200px;
+    background: #ededed;
+}
+.visual {
+    display: flex;
+}
+.visual .txtWrap {
+    padding: 20px;
+}
+.visual .txtWrap p {
+    /* font-size: 10px; */
+    text-align: center;
+    font-weight: 300;
+}
+.visual .txtWrap h3 {
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 25px;
+}
+.visual .imgWrap {}
+.visual .imgWrap img {
+    width: 261.5px;
+    height: 200px;
+}
+
+/* ================================ */
+
+/* main */
+#container {
+    height: 100%;
+    background: #fff;
+}
+#content {
+    width: 100%;
+    color: #fff;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+.main .mainBtnWrap {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-evenly;
+}
+.main .mainBtnWrap .imageBox {
+    width:90px;
+    height:130px;
+    overflow:hidden;
+    margin:0 auto;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+.main .mainBtnWrap .imageBox:hover {
+    transform: scale(1.1);
+}
+.main .mainBtnWrap .imageBox .imageThumbnail {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
