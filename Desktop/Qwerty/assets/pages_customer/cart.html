@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- axios -->
+  <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qwerty's Delivery</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/customer.css">
+</head>
+
+<body>
+  <div id="wrap">
+    <!-- header -->
+    <header id="header">
+      <div class="inner2">
+        <h1><a href="./storeSearch.html">장바구니</a></h1>
+      </div>
+    </header>
+    <section id="subVisual"></section>
+    <main id="container" class="main">
+      <section id="content">
+        <ul id="card-list"></ul>
+        <!-- 여기에 장바구니 상품 목록이 표시됩니다. -->
+      </section>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <p>made by team.qwerty</p>
+      </div>
+    </footer>
+  </div>
+  
+  <script>
+    const getCartList = async () => {
+      const menuId = localStorage.getItem('menuId')
+      console.log('get menuId =>', menuId)
+      axios.get(`http://localhost:3000/api/user/cart`)
+        .then(function (response) {
+          console.log(response.data);
+          const StoreCardList = document.querySelector("#card-list");
+
+          StoreCardList.innerHTML = response.data.map((menu) => {
+            return `<li class="movie-card" id=${menu.menuId}>
+                      <p>${menu.menuImage}</p>
+                      <h3 class="movie-title">${menu.menuName}</h3>
+                      <p>평점: ${menu.price}</p>
+                    </li>`
+          }).join('')
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      getCartList()
+    })
+  </script>
+</body>
+
+</html>

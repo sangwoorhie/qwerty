@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- axios -->
+  <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qwerty's Delivery</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/customer.css">
+</head>
+
+<body>
+  <div id="wrap">
+    <!-- header -->
+    <header id="header">
+      <div class="inner2">
+        <h1><a href="./storeSearch.html">Qwerty's Delivery - 고객용</a></h1>
+        <nav class="nav">
+          <div id="store-container">
+            <!-- 여기에 음식점 정보가 들어갑니다. -->
+            <!-- storeImage, storeName, totalRating -->
+          </div>
+          <ul class="gnb">
+            <li><a href="./review">리뷰</a></li>
+            <li><a href="./reviewEdit">리뷰수정</a></li>
+            <li><a href="./reviewWrite">리뷰삭제</a></li>
+            <li><a href="javascript:history.back()">뒤로가기</a></li>
+          </ul>
+        </nav>
+        <div class="searchWrap">
+          <input type="text" placeholder="찾으시는 메뉴를 입력해주세요" />
+          <button class="search">검색</button>
+        </div>
+      </div>
+    </header>
+    <section id="subVisual"></section>
+    <main id="container" class="main">
+      <section id="content">
+        <ul id="card-list"></ul>
+        <!-- 리뷰가 표시됩니다. (card-list) -->
+        <!-- content, rating  -->
+      </section>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <p>made by team.qwerty</p>
+      </div>
+    </footer>
+  </div>
+  <script>
+
+     // 음식점 정보
+    const getStoreInfo = async () => {
+      const storeId = localStorage.getItem('storeId')
+      console.log('get storeId =>', storeId)
+      axios.get(`http://localhost:3000/api/user/stores/${storeId}`)
+        .then(function (response) {
+          console.log(response.data);
+          const storeInfo = response.data
+          const storeCard = document.querySelector("#store-container")
+          storeCard.innerHTML =
+            `<div id="card">
+              <p id="storeImage">${storeInfo.storeImage}</p>
+              <h3 class="storeName">${storeInfo.storeName}</h3>
+              <p id="totalRating">${storeInfo.totalRating}</p>
+            </div>`
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    }
+
+
+
+  </script>
+</body>
+
+</html>

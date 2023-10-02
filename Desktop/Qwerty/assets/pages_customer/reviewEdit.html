@@ -1,0 +1,125 @@
+<!-- 리뷰 작성 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- axios -->
+  <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qwerty's Delivery</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/customer.css">
+</head>
+
+<body>
+    <!-- header -->
+    <header id="header">
+      <div class="inner2">
+        <h1><a href="./storeSearch.html">Qwerty's Delivery - 고객용</a></h1>
+        <nav class="nav">
+          <div id="store-container">
+            <!-- 여기에 음식점 정보가 들어갑니다. -->
+          </div>
+          <ul class="gnb">
+            <li><a href="/storeSearch.html">Store</a></li>
+            <li><a href="/review.html">리뷰목록</a></li>
+            <!-- <li><a href="javascript:history.back()">뒤로가기</a></li> -->
+          </ul>
+        </nav>
+      </div>
+    </header>
+      <link rel="stylesheet" href="../css/reset.css">
+      <div id="wrap">
+          <form>
+              <div id="rating" style="float: left">
+                가게에 대한 1~5 평점을 선택해 주세요
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" value="1">
+                  <label class="form-check-label" for="inlineRadio1">1</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" value="2">
+                  <label class="form-check-label" for="inlineRadio2">2</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" value="3">
+                  <label class="form-check-label" for="inlineRadio3">3</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" value="4">
+                  <label class="form-check-label" for="inlineRadio4">4</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" value="5">
+                  <label class="form-check-label" for="inlineRadio5">5</label>
+                </div>
+                <div id="categoryresult"></div>
+              </div>
+                <div>
+                  <label for="review">리뷰</label>
+                  <textarea id="content" class="form-control" type="text" name ="content"  placeholder="리뷰를 입력해 주세요."></textarea>
+              </div>
+          </form>    
+          <div class="submitBtn">
+            <button onclick="submit(event)">리뷰수정</button> 
+            <!-- type="submit"  -->
+        </div>
+      </div>
+      <!-- script part -->
+    
+    
+<script>
+    
+    // 음식점 정보
+const getStoreInfo = async () => {
+      const storeId = localStorage.getItem('storeId')
+      console.log('get storeId =>', storeId)
+      axios.get(`http://localhost:3000/api/user/stores/${storeId}`)
+        .then(function (response) {
+          console.log(response.data);
+          const storeInfo = response.data
+          const storeCard = document.querySelector("#store-container")
+
+          storeCard.innerHTML =
+            `<div id="card">
+              <p id="storeImage">${storeInfo.storeImage}</p>
+              <h3 class="storeName">${storeInfo.storeName}</h3>
+              <p id="totalRating">${storeInfo.totalRating}</p>
+            </div>`
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    } 
+          // 리뷰 수정
+          function submit(e) {   
+            e.preventDefault();
+            
+            const rating = $('input[name=inlineRadioOptions]:checked').val();
+            const content = $('#content').val() 
+          
+            const data = {
+              rating: rating,
+              content: $('#content').val(),
+            }
+            console.log(data)
+            axios.post(`http://localhost:3000/api/user/store/${storeId}/review/${reviewId}`, data)
+            .then(request => {
+            console.log(data.data);
+            alert("고객님의 소중한 리뷰가 수정되었습니다.");
+            // location.href = './review.html'
+            }).catch(function(error) { // error대신 response넣어서 로그인안된경우 찾기
+            alert("리뷰 수정에 실패하였습니다.");
+            console.log(error);
+            })
+            }
+                       
+      </script>
+</body>
+</html>
+  <!-- script part -->
+  <!-- <script src='../js/review.js'></script> -->

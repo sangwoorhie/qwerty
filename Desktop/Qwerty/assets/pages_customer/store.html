@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- axios -->
+  <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Qwerty's Delivery</title>
+  <link rel="stylesheet" href="../css/reset.css">
+  <link rel="stylesheet" href="../css/customer.css">
+</head>
+
+<body>
+  <div id="wrap">
+    <!-- header -->
+    <header id="header">
+      <div class="inner2">
+        <h1><a href="./storeSearch.html">Qwerty's Delivery - 고객용</a></h1>
+        <nav class="nav">
+          <div id="store-container">
+            <!-- 여기에 음식점 정보가 들어갑니다. -->
+            <!-- storeImage, storeName, totalRating -->
+          </div>
+          <ul class="gnb">
+            <li><a href="./review.html">리뷰</a></li>
+            <li><a href="./reviewWrite.html">리뷰작성</a></li>
+            <li><a href="javascript:history.back()">뒤로가기</a></li>
+          </ul>
+        </nav>
+        <div class="searchWrap">
+          <input type="text" placeholder="찾으시는 메뉴를 입력해주세요" />
+          <button class="search">검색</button>
+        </div>
+      </div>
+    </header>
+    <section id="subVisual"></section>
+    <main id="container" class="main">
+      <section id="content">
+        <ul id="card-list"></ul>
+        <!-- 여기에 메뉴 카드가 표시됩니다. (card-list) -->
+        <!-- menuId, menuImage, menuName, price  -->
+      </section>
+    </main>
+    <footer id="footer">
+      <div class="inner">
+        <p>made by team.qwerty</p>
+      </div>
+    </footer>
+  </div>
+  <script>
+    
+    const getStoreInfo = async () => {
+      const storeId = localStorage.getItem('storeId')
+      console.log('get storeId for getStoreInfo =>', storeId)
+      axios.get(`http://localhost:3000/api/user/stores/${storeId}`)
+        .then(function (response) {
+          console.log(response.data);
+          const storeInfo = response.data
+          const storeCard = document.querySelector("#store-container")
+
+          storeCard.innerHTML =
+            `<div id="card">
+              <p id="storeImage">${storeInfo.storeImage}</p>
+              <h3 class="storeName">${storeInfo.storeName}</h3>
+              <p id="totalRating">${storeInfo.totalRating}</p>
+            </div>`
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    }
+
+    const getMenus = async () => {
+      const storeId = localStorage.getItem('storeId')
+      console.log('get storeId for getMenus =>', storeId)
+      axios.get(`http://localhost:3000/api/user/stores/${storeId}/menus`)
+        .then(function (response) {
+          console.log(response.data);
+          const StoreCardList = document.querySelector("#card-list");
+
+          StoreCardList.innerHTML = response.data.map((menu) => {
+            return `<li class="movie-card" id=${menu.menuId}>
+                      <p>${menu.menuImage}</p>
+                      <h3 class="movie-title">${menu.menuName}</h3>
+                      <p>평점: ${menu.price}</p>
+                    </li>`
+          }).join('')
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    }
+    document.addEventListener("DOMContentLoaded", async () => {
+      getStoreInfo()
+      getMenus()
+    })
+
+    function getCartPage() {
+      location.href = "./cart.html";
+    }
+
+    const menuCardList = document.querySelector('#card-list');
+    const putMenuInCart = async ({ target }) => {
+      if (target === menuCardList) return;
+
+      const menuIdSender = async (target) => {
+        try {
+          const data = {
+            menuId: target.id
+          }
+          console.log(data)
+          const addProductInCart = await axios.post('http://localhost:3000/api/cart', data, {
+            withCredentials: true,
+          })
+            .then(data => console.log(data.data))
+        } catch (error) {
+          console.log(error)
+        }
+      }
+
+      if (target.matches('.movie-card')) {
+        alert(target.id); // target.id = menuId
+        menuIdSender(target)
+      } else {
+        alert(target.parentNode.id);
+        menuIdSender(target.parentNode)
+      }
+    };
+    menuCardList.addEventListener('click', putMenuInCart);
+
+
+  </script>
+</body>
+
+</html>

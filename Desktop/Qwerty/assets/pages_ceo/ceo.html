@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿼티의민족 사장님 광장</title>
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/ceo.css">
+
+    <!-- axios -->
+    <script src="http://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <!-- 본문바로가기 -->
+    <p id="skipNav" class="hide"><a href="../pages_ceo/index.html">본문 바로가기</a></p>
+
+    <div id="wrap">
+        <!-- header -->
+        <header id="header">
+            <div class="inner">
+                <h1><a href="../index.html">Qwerty's Delivery - CEO</a></h1>
+                <nav class="nav">
+                    <ul class="gnb">
+                        <li><a href="./ceoLogin.html">로그인</a></li>
+                        <li><a href="./ceoSignup.html">회원가입</a></li>
+                        <li><a onclick="logout();">로그아웃</a></li>
+                    </ul>
+                </nav>
+                <div class="searchWrap">
+                    <input type="text" placeholder="메뉴를 입력해주세요"/>
+                    <button class="search">검색</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- subvisual -->
+        <section id="subvisual"></section>
+
+        <!-- main -->
+        <main id="container" class="main">
+            <section id="content">
+                <div class="ceoPostWrap">
+                    <div class="ceoPost">
+                        <h3>사장님! 여기서 음식올리세요 :&#41;</h3>
+                        <p>음식 조회,추가,수정,삭제</p>
+
+                        <form class="remote">
+                            <span class="center"> 
+                                <select>
+                                    <option value="메뉴이름" name="메뉴이름">메뉴이름</option>
+                                    <option value="가격" name="가격">가격</option>
+                                </select>
+                                <input type="text"/> 
+                                <input type="button" name="검색" class="gradient" value="검색"/>
+                            </span>
+                        </form>
+                            
+                        <table class="menu" id="menuTable">
+                            <thead>
+                              <tr>
+                                <th>메뉴 Id</th>
+                                <th>메뉴이름</th>
+                                <th>메뉴사진</th>
+                                <th>가격</th>
+                                <th>메뉴수정</th>
+                                <th>메뉴삭제</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td id="storeId"></td>
+                                <td id="menuName"></td>
+                                <td id="menuImage"></td>
+                                <td id="price"></td>
+                                <td>
+                                    <button class="changeBtn" onclick="menuChange(item.menuId, item.menuName, item.menuImage, item.price)">메뉴수정</button>
+                                </td>
+                                <td>
+                                    <button class="deleteBtn" onclick="menuDelete();">메뉴삭제</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                        </table>
+
+                        <div id="menuEditPopup" class="popup" style="display: none; border: 1px solid #333; padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+                            <div class="popup-content">
+                                <span class="close" onclick="closePopup()" style="cursor:pointer;">&times;</span>
+                                <h2>메뉴 수정하기!</h2>
+                                <form id="editMenuForm">
+                                    <input type="hidden" id="menuId" />
+                                    <label for="menuName">메뉴 이름:</label>
+                                    <input type="text" id="menuName" required />
+                                    <br>
+                                    <label for="menuImage">메뉴 사진:</label>
+                                    <input type="file" id="menuImageInput" accept="image/*" required />
+                                    <img src="" id="menuImagePreview" style="max-width: 200px; display: none;" />
+                                    <br>
+                                    <label for="price">가격:</label>
+                                    <input type="text" id="price" required />
+                                    <br>
+                                    <input type="button" value="메뉴 수정" class="changeBtn" />
+                                </form>
+                            </div>
+                        </div>
+                            
+                        <div class="writeBtnWrap">
+                            <input type="button" value="회원목록" class="btn ceoGetBtn" onclick="location.href='./ceoGet.html'" >
+                            <input type="button" value="글쓰기" class="btn writeBtn" onclick="location.href='./ceoPost.html'"/>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- footer -->
+        <footer id="footer">
+            <div class="inner">
+                <p>made by team.qwerty</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- script part -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="../js/ceoMenu.js"></script>
+    <!-- <script src="../js/ceoUsers.js"></script> -->
+</body>
+</html>
