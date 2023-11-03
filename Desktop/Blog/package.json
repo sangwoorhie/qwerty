@@ -16,9 +16,7 @@
     "helmet": "^7.0.0",
     "hpp": "^0.2.3",
     "moment": "^2.29.4",
-    "mongoose": "^7.6.4",
-    "morgan": "^1.10.0",
-    "nodemon": "^3.0.1"
+    "mongoose": "^8.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.23.0",
