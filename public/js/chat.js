@@ -6,7 +6,7 @@ const username = query.get("username");
 
 const room = query.get("room");
 
-// callback함수
+// callback함수 => error메시지는 index.js
 socket.emit("join", { username, room }, (error) => {
   if (error) {
     alert(error);
@@ -41,3 +41,24 @@ socket.on("message", (message) => {
 function scrollToBottom() {
   messages.scrollTop = messages.scrollHeight;
 }
+
+const messageForm = document.querySelector("message-form");
+const messageFormInput = messageForm.querySelector("input");
+const messageFormButton = messageForm.querySelector("button");
+
+messageForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  messageFormButton.setAttribute("disabled", "disabled");
+
+  const message = e.target.elements.message.value; // 메시지 내용
+
+  socket.emit("sendMessage", message, (error) => {
+    messageFormButton.removeAttribute("disabled");
+    messageFormInput.value = "";
+    messageFormInput.focus();
+
+    if (error) {
+      return console.log(error);
+    }
+  });
+});
